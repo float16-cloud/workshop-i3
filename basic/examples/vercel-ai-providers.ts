@@ -6,11 +6,6 @@ import { createOpenAI } from "@ai-sdk/openai";
 // import { anthropic } from '@ai-sdk/anthropic';
 // import { azure } from '@ai-sdk/azure';
 
-// const azure = createAzure({
-//   resourceName: 'your-resource-name', // Azure resource name
-//   apiKey: 'your-api-key',
-// });
-
 const openai = createOpenAI({
   baseURL: process.env.OPENAI_BASE_API,
   apiKey: process.env.OPENAI_API_KEY,

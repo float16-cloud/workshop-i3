@@ -108,7 +108,7 @@ RESPONSE FORMAT:
 
 `;
   // const userQuestion = "สวัสดี";
-  const userQuestion = "Details of users in the `tbPMSUser`";
+  const userQuestion = "5 อันดับที่มีคะแนนประเมินสูงสุด";
 
   console.log("🤖 Text-to-SQL Agent Starting...");
   console.log(`📝 User Question: ${userQuestion}`);
