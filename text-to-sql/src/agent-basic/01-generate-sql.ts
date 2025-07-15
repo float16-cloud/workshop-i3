@@ -1,16 +1,11 @@
 import { generateObject } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
 import z from "zod";
 import { databaseSchemas } from "./schema";
+import { azure } from "./config";
 
 export const generateTextToSql = async () => {
   // provider adapter
-  const openai = createOpenAI({
-    baseURL: process.env.OPENAI_BASE_API,
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  const model = openai("gpt-4o-mini");
+  const model = azure("gpt-4o-mini");
 
   // When passing all data to LLM for processing, we need to set limits to prevent excessive token usage
   const maxRowLimit = 100;
@@ -33,6 +28,8 @@ RESPONSE FORMAT:
   const prompt = (question: string) => `
 DATABASE SCHEMA:
 ${databaseSchemas}
+
+META DATA: //
 
 User Query:
 ${question}

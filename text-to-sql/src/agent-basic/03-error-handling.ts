@@ -3,22 +3,11 @@ import { createOpenAI } from "@ai-sdk/openai";
 import sql from "mssql";
 import z from "zod";
 import { databaseSchemas } from "./schema";
+import { azure, sqlConfig } from "./config";
 
 const processQueryWithRetry = async () => {
-  // provider adapter
-  const openai = createOpenAI({
-    baseURL: process.env.OPENAI_BASE_API,
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  const model = openai("gpt-4o-mini");
-
-  const sqlConfig = {
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DATABASE,
-    server: process.env.SQL_SERVER!,
-  };
+ // provider adapter
+ const model = azure("gpt-4o-mini");
 
   const maxRowLimit = 100;
   const maxRetries = 3;
@@ -107,7 +96,7 @@ ${question}
       // Step 3: Generate natural language response
       console.log("Generating response...");
       const { text } = await generateText({
-        model: openai("gpt-4o-mini"),
+        model,
         messages: [
           {
             role: "system",

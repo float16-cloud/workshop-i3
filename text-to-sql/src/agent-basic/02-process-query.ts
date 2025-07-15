@@ -2,22 +2,11 @@ import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import sql from "mssql";
 import { generateTextToSql } from "./01-generate-sql";
+import { azure, sqlConfig } from "./config";
 
 const processQuery = async () => {
   // provider adapter
-  const openai = createOpenAI({
-    baseURL: process.env.OPENAI_BASE_API,
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  const model = openai("gpt-4o-mini");
-
-  const sqlConfig = {
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DATABASE,
-    server: process.env.SQL_SERVER!,
-  };
+  const model = azure("gpt-4o-mini");
 
   const { input, sqlQuery } = await generateTextToSql();
 

@@ -43,8 +43,6 @@ A TypeScript-based text-to-SQL system that converts natural language questions i
    SQL_USER=your_username
    SQL_PASSWORD=your_password
    SQL_PORT=1433
-   SQL_ENCRYPT=true
-   SQL_TRUST_SERVER_CERTIFICATE=true
    ```
 
 ## Usage

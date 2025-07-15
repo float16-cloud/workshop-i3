@@ -1,8 +1,8 @@
-import { generateObject, generateText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
 import sql from "mssql";
 import z from "zod";
 import { databaseSchemas } from "../agent-basic/schema";
+import { azure, sqlConfig } from "../agent-basic/config";
 
 // Type definitions for tool results
 type SchemaResult = {
@@ -16,39 +16,35 @@ type QueryResult = {
   message: string;
 };
 
-// SQL Server configuration
-const sqlConfig = {
-  user: process.env.SQL_USER,
-  password: process.env.SQL_PASSWORD,
-  database: process.env.SQL_DATABASE,
-  server: process.env.SQL_SERVER!,
-};
-
 // Tool definitions
 const getDatabaseSchema = async (): Promise<SchemaResult> => {
   console.log(`\n🔧 Tool Call: get_database_schema`);
   console.log(`Arguments: {}`);
   console.log(`Executing...`);
-  
+
   const result = {
     schema: databaseSchemas,
-    message: "Database schema retrieved successfully"
+    message: "Database schema retrieved successfully",
   };
-  
+
   console.log(`Tool Result: get_database_schema`);
   console.log(`Schema retrieved successfully`);
   console.log(``);
-  
+
   return result;
 };
 
-const executeSqlQuery = async ({ query }: { query: string }): Promise<QueryResult> => {
+const executeSqlQuery = async ({
+  query,
+}: {
+  query: string;
+}): Promise<QueryResult> => {
   console.log(`\n🔧 Tool Call: execute_sql_query`);
   console.log(`Arguments: { query: "${query}" }`);
   console.log(`Executing...`);
-  
+
   // Validate that it's a SELECT query
-  if (!query.trim().toLowerCase().startsWith('select')) {
+  if (!query.trim().toLowerCase().startsWith("select")) {
     throw new Error("Only SELECT queries are allowed for safety");
   }
 
@@ -56,18 +52,18 @@ const executeSqlQuery = async ({ query }: { query: string }): Promise<QueryResul
     // Connect to SQL Server and execute the query
     await sql.connect(sqlConfig);
     const { recordset } = await sql.query(query);
-    
+
     const result = {
       results: recordset,
       rowCount: recordset.length,
-      message: "Query executed successfully"
+      message: "Query executed successfully",
     };
-    
+
     console.log(`Tool Result: execute_sql_query`);
     console.log(`Query executed, returned ${result.rowCount} rows`);
-    console.log(`Result:`, result);
+    // console.log(`Result:`, result);
     console.log(``);
-    
+
     return result;
   } catch (error: any) {
     console.log(`❌ Tool Error: execute_sql_query`);
@@ -78,13 +74,8 @@ const executeSqlQuery = async ({ query }: { query: string }): Promise<QueryResul
 };
 
 const runTextToSqlAgent = async () => {
-  // Provider adapter
-  const openai = createOpenAI({
-    baseURL: process.env.OPENAI_BASE_API,
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  const model = openai("gpt-4o-mini");
+  // provider adapter
+  const model = azure("gpt-4o-mini");
 
   const maxRowLimit = 100;
 
@@ -114,9 +105,10 @@ RESPONSE FORMAT:
 - Use the tools as needed
 - Provide a natural language answer based on the query results
 - If there are any issues, explain them clearly
-`;
 
-  const userQuestion = "Show me all products with their category names and prices";
+`;
+  // const userQuestion = "สวัสดี";
+  const userQuestion = "Details of users in the `tbPMSUser`";
 
   console.log("🤖 Text-to-SQL Agent Starting...");
   console.log(`📝 User Question: ${userQuestion}`);
@@ -129,34 +121,39 @@ RESPONSE FORMAT:
       messages: [
         {
           role: "system",
-          content: systemPrompt
+          content: systemPrompt,
         },
         {
           role: "user",
-          content: userQuestion
-        }
+          content: userQuestion,
+        },
       ],
+
       tools: {
         get_database_schema: {
-          description: "Get the complete database schema including all tables and their relationships",
+          description:
+            "Get the complete database schema including all tables and their relationships",
           parameters: z.object({}),
-          execute: getDatabaseSchema
+          execute: getDatabaseSchema,
         },
         execute_sql_query: {
-          description: "Execute a SQL query and return the results. Only SELECT queries are allowed for safety.",
+          description:
+            "Execute a SQL query and return the results. Only SELECT queries are allowed for safety.",
           parameters: z.object({
-            query: z.string().describe("The SQL query to execute (SELECT only)")
+            query: z
+              .string()
+              .describe("The SQL query to execute (SELECT only)"),
           }),
-          execute: executeSqlQuery
-        }
-      }
+          execute: executeSqlQuery,
+        },
+      },
+      maxSteps: 10,
     });
 
     console.log("=== Final Answer ===");
     console.log(text);
-    console.log("");
+    console.log("================================================");
     console.log("🎉 Agent completed successfully!");
-
   } catch (error: any) {
     console.error("Error:", error.message);
     console.error("Agent failed to complete the task");
@@ -164,4 +161,4 @@ RESPONSE FORMAT:
 };
 
 // Run the agent
-runTextToSqlAgent(); 
+runTextToSqlAgent();

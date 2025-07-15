@@ -1,4 +1,8 @@
-# basic
+# Basic AI Examples
+
+This directory contains basic examples of AI integration using various libraries and APIs.
+
+## Installation
 
 To install dependencies:
 
@@ -6,10 +10,34 @@ To install dependencies:
 bun install
 ```
 
-To run:
+## Environment Setup
 
+Before running the examples, you need to set up your environment variables:
+
+1. Navigate to the `/examples` directory
+2. Create a `.env` file based on `.env.example` (if available)
+3. Add your API keys to the `.env` file
+
+Common environment variables you might need:
+- `OPENAI_API_KEY` - Your OpenAI API key
+- Other API keys as required by specific examples
+
+## Running Examples
+
+To run any example:
+
+1. Navigate to the `/examples` directory:
 ```bash
-bun run index.ts
+cd examples
 ```
 
-This project was created using `bun init` in bun v1.2.1. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+2. Run the desired example file:
+```bash
+bun run {filename}.ts
+```
+
+Example command:
+```bash
+bun run openai-basic.ts
+```
+
