@@ -4,7 +4,17 @@ import { z } from "zod";
 
 const { object } = await generateObject({
   model: openai("gpt-4o-mini"),
-  schema: z.object({}),
+  schema: z.object({
+    todoList: z.object({
+      date: z.string(),
+      tasks: z.array(
+        z.object({
+          task: z.string(),
+          done: z.boolean(),
+        })
+      ),
+    }),
+  }),
   messages: [
     {
       role: "user",
