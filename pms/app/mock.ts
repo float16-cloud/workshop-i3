@@ -1,4 +1,5 @@
-import { EvalulateForm } from "./types";
+import { EvalulateForm } from "@/types";
+
 
 export const initialMockData: EvalulateForm[] = [
   {

@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import Image from "next/image";
 import {
   Table,
   TableHeader,
@@ -13,7 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Textarea } from "@/components/ui/textarea";
-import { EvalulateForm } from "./types";
+import { EvalulateForm } from "@/types";
 import {
   EvaluatePerformanceaRequest,
   EvaluatePerformanceaResponse,

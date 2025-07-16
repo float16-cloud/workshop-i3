@@ -1,4 +1,4 @@
-import { EvalulateForm } from "@/app/types";
+import { EvalulateForm } from "@/types";
 import { azure } from "@/lib/ai/providers/azure";
 import { generateObject } from "ai";
 import { openai } from '@ai-sdk/openai';

@@ -1,9 +1,5 @@
-import { METADATA_SCHEMA } from "@/lib/ai/prompts/metadata";
-import { databaseSchemas } from "@/lib/ai/prompts/schema";
-import { SYSTEM_PROMPT } from "@/lib/ai/prompts/system";
 import { azure } from "@/lib/ai/providers/azure";
-import { sqlTools } from "@/lib/ai/tools";
-import { generateObject, generateText, Output } from "ai";
+import { generateObject } from "ai";
 import z from "zod";
 import sql from "mssql";
 import { sqlConfig } from "@/lib/database/config";
