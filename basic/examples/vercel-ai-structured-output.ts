@@ -1,9 +1,10 @@
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
 import { z } from 'zod';
+import { azure } from './config';
 
 const { object } = await generateObject({
-  model: openai("gpt-4o-mini"),
+  model: azure("gpt-4o-mini"),
   schema: z.object({
     recipe: z.object({
       name: z.string(),

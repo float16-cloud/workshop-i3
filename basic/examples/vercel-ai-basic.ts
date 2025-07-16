@@ -13,6 +13,9 @@ const { text } = await generateText({
       content: "hello",
     },
   ],
+  /** เขียนได้หลายวิธี */
+  // system: "Please answer in the thai language" 
+  // prompt: "hello"
 });
 
 console.log(text);
