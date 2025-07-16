@@ -1,0 +1,84 @@
+# Cursor Rules for shadcn/ui Project
+
+## Project Setup
+- This is a Next.js 14+ project using TypeScript
+- We use shadcn/ui for UI components
+- Tailwind CSS is configured for styling
+- ESLint and Prettier are set up for code quality
+
+## Component Guidelines
+
+### shadcn/ui Components
+- Always use shadcn/ui components when available instead of custom HTML elements
+- Import components from `@/components/ui/` directory
+- Follow the shadcn/ui component patterns and props
+- Use the `cn()` utility function for conditional class merging
+
+### Styling
+- Use Tailwind CSS classes for styling
+- Follow the design system defined in `tailwind.config.js`
+- Use CSS variables for theming (defined in `globals.css`)
+- Prefer utility classes over custom CSS
+
+### File Structure
+- Place UI components in `components/ui/` directory
+- Use PascalCase for component names
+- Export components as default exports
+- Keep components focused and single-purpose
+
+### TypeScript
+- Use strict TypeScript configuration
+- Define proper interfaces for component props
+- Use React.FC or function components with proper typing
+- Avoid `any` type, use proper type definitions
+
+### Best Practices
+- Follow React hooks rules
+- Use proper accessibility attributes (aria-*)
+- Implement responsive design with Tailwind breakpoints
+- Optimize for performance with proper memoization when needed
+- Use semantic HTML elements
+
+### Code Style
+- Use 2 spaces for indentation
+- Use single quotes for strings
+- Use semicolons at the end of statements
+- Follow ESLint and Prettier configurations
+- Write meaningful component and variable names
+
+### shadcn/ui Specific
+- Use `cn()` utility for class merging: `import { cn } from "@/lib/utils"`
+- Follow the component composition pattern
+- Use forwardRef for components that need ref forwarding
+- Implement proper variant props using cva when needed
+- Use the `asChild` prop for polymorphic components
+
+### Examples
+```tsx
+// Good component structure
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+
+interface MyComponentProps {
+  className?: string
+  children: React.ReactNode
+}
+
+export default function MyComponent({ className, children }: MyComponentProps) {
+  return (
+    <div className={cn("base-classes", className)}>
+      <Button variant="default">
+        {children}
+      </Button>
+    </div>
+  )
+}
+```
+
+## Common Commands
+- `npx shadcn@latest add [component]` - Add new shadcn/ui components
+- `npx shadcn@latest init` - Initialize shadcn/ui (already done)
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checking 

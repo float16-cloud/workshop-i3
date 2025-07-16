@@ -7,7 +7,7 @@
     "agent-process-query": "bun run --watch src/agent-basic/02-process-query.ts",
     "agent-error-handling": "bun run --watch src/agent-basic/03-error-handling.ts",
     "tool-call-agent": "bun run src/agent-toolcall/01-agent-toolcall.ts",
-    "agent-psm": "bun run src/agemt-psm/index.ts"
+    "agent-psm": "bun run src/agemt-pms/index.ts"
   },
   "dependencies": {
     "@ai-sdk/azure": "^1.3.24",
