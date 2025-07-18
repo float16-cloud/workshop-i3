@@ -69,7 +69,11 @@ const executeSqlQuery = async ({
     console.log(`❌ Tool Error: execute_sql_query`);
     console.log(`Error: ${error.message}`);
     console.log(``);
-    throw new Error(`SQL execution failed: ${error.message}`);
+    return {
+      results: [],
+      rowCount: 0,
+      message: `SQL execution failed: ${error.message}`,
+    };
   }
 };
 

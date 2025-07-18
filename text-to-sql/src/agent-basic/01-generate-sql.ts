@@ -35,12 +35,13 @@ User Query:
 ${question}
 `;
 
-  const input = "Show me all products with their prices";
+  const input = "มีพนักงานกี่คน";
 
   const { object } = await generateObject({
     model,
     schema: z.object({
       query: z.string(),
+      reason: z.string(),
     }),
     temperature: 0,
     messages: [
