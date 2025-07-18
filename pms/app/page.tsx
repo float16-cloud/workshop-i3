@@ -31,7 +31,7 @@ export default function Page() {
   const { mutate: generatePersonalKpi, isPending: isGeneratingPersonalKpi } =
     useMutation({
       mutationFn: (data: string) =>
-        axios.post("/api/kpi/generate-personal-v2", {
+        axios.post("/api/kpi/generate-personal", {
           wfEmpId: data,
         }),
       onSuccess: ({ data }) => {

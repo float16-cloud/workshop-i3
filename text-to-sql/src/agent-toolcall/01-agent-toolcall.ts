@@ -110,6 +110,7 @@ RESPONSE FORMAT:
 - Provide a natural language answer based on the query results
 - If there are any issues, explain them clearly
 
+
 `;
   // const userQuestion = "สวัสดี";
   const userQuestion = "5 อันดับที่มีคะแนนประเมินสูงสุด";
